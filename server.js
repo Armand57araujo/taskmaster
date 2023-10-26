@@ -23,15 +23,28 @@ res.sendFile(path.join(__dirname, '/public/notes.html'))
 );
 
 app.get('/api/notes', (req, res) => {
-res.json(db)
+return res.json(db)
 });
 
 
 
 
 app.post('/api/notes', (req, res) => {
-    const newNote = req.body;
-    newNote.id = data.length + 1;
+    // const newNote = req.body;
+    // newNote.id = data.length + 1;
+
+    const { title, text, id } = req.body;
+
+  if (req.body) {
+    const newNote = {
+
+        title, 
+        text, 
+        id: uuid(),
+    }
+ 
+  };
+
     data.push(newNote);
 
     // stringify data?
