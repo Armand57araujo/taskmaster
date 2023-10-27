@@ -6,8 +6,7 @@ const db = require('./db/db.json')
 const uuid = require('./uuid')
 
 // const currentTasks = require('./db/db.json');
-const PORT = 3001;
-
+const PORT = process.env.PORT || 3001
 
 
 app.use(express.json());
@@ -60,10 +59,18 @@ app.post('/api/notes', (req, res) => {
     })
 })
 
-app.delete('/api/notes/:id', (req, res)=> {
- const idToDelete = req.params.id;
- 
-});
+// app.deleteNote ('notes/:id', (req, res)=> {
+//  const noteId = req.params.noteId;
+//  readFromFile('./db/db.json')
+//  .then((db) => JSON.parse(db))
+//  .then((json) => {
+//     const result = json.filter((notes.notesId !== noteId));
+
+//     writeToFile('./db/db.json', result);
+
+//     res.jeson(`Item ${noteId} has been deleted`);
+//  })
+// });
 
 
 
