@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path')
 const db = require('./db/db.json')
 const uuid = require('./uuid')
+const { readFromFile, writeToFile } = require ('./helpers/fsUtils')
 
 // const currentTasks = require('./db/db.json');
 const PORT = process.env.PORT || 3001
@@ -23,7 +24,9 @@ res.sendFile(path.join(__dirname, '/public/notes.html'))
 );
 
 app.get('/api/notes', (req, res) => {
-res.json(db)
+    readFromFile('./db/db.json')
+    .then(data => res.json (JSON.parse(data)))
+// res.json(db)
 });
 
 
@@ -59,18 +62,22 @@ app.post('/api/notes', (req, res) => {
     })
 })
 
-// app.deleteNote ('notes/:id', (req, res)=> {
-//  const noteId = req.params.noteId;
-//  readFromFile('./db/db.json')
-//  .then((db) => JSON.parse(db))
-//  .then((json) => {
-//     const result = json.filter((notes.notesId !== noteId));
+app.delete ('/api/notes/:id', (req, res)=> {
+    console.log('test')
+ const noteId = req.params.id;
+ readFromFile('./db/db.json')
+ .then((db) => {
+const jsonArray = JSON.parse(db)
+ 
+    const result = jsonArray.filter(notes => (notes.id !== noteId));
 
-//     writeToFile('./db/db.json', result);
+    writeToFile('./db/db.json', result);
 
-//     res.jeson(`Item ${noteId} has been deleted`);
-//  })
-// });
+
+    res.json(`Item ${noteId} has been deleted`);
+    console.log()
+})
+});
 
 
 
